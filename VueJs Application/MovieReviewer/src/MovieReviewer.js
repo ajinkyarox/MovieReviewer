@@ -2,7 +2,7 @@ import Vue from 'vue'
 import axios from 'axios'
 
 const client = axios.create({
-  baseURL: 'https://localhost:44380/movies/GET',
+  baseURL: 'https://localhost:44380/movies/',
   json: true
 })
 
@@ -19,6 +19,6 @@ export default {
     })
   },
   getAll() {
-    return this.execute('get', '/')
+    return this.execute('get', '/GETALL')
   }
 }

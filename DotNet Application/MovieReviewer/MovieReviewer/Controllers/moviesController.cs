@@ -5,9 +5,15 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Net.Http;
+using System.Web.Http;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using MovieReviewer;
 using MovieReviewer.Cors;
+
 
 namespace MovieReviewer.Controllers
 {
@@ -21,6 +27,57 @@ namespace MovieReviewer.Controllers
         {
             movy movy = db.movies.Find(1);
             return "Hello from "+movy.Name;
+        }
+
+
+        [System.Web.Mvc.HttpPost]
+        public string PostMovie([FromBody] movy movy)
+        {
+            dynamic jsonData = "";
+            Console.WriteLine(movy.Name);
+            try
+            {
+
+               /* movy movy = new movy();
+                 dynamic jsonData = JObject.Parse(requestbody.ToString());
+                 movy.Name = jsonData.Name;
+                 movy.Genre = jsonData.Genre;
+               */
+                movy movy_1 = db.movies.FirstOrDefault(i => i.Name == movy.Name);
+                if (movy != null)
+                {
+                    jsonData = @"{  
+'status':'failure',  
+'responseMessage':'Movie Already exists'  
+}";
+                    return JsonConvert.SerializeObject(jsonData);
+
+
+                }
+
+                db.movies.Add(movy);
+                db.SaveChanges();
+                 jsonData = @"{  
+'status':'failure',  
+'responseMessage':movy  
+}";
+                return JsonConvert.SerializeObject(jsonData);
+            }
+            catch(Exception e)
+            {
+                 jsonData = @"{  
+'status':'failure',  
+'responseMessage':'Exception' 
+}";
+                return JsonConvert.SerializeObject(jsonData);
+            }
+            
+        }
+
+        public string GetAll()
+        {
+
+     return JsonConvert.SerializeObject(db.movies.ToList());
         }
         // GET: movies
         public ActionResult Index()
@@ -52,7 +109,7 @@ namespace MovieReviewer.Controllers
         // POST: movies/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        //[HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Genre")] movy movy)
         {
@@ -84,7 +141,7 @@ namespace MovieReviewer.Controllers
         // POST: movies/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        //[HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Genre")] movy movy)
         {
@@ -113,7 +170,7 @@ namespace MovieReviewer.Controllers
         }
 
         // POST: movies/Delete/5
-        [HttpPost, ActionName("Delete")]
+        //[HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
