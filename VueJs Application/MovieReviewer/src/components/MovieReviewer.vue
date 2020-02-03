@@ -8,19 +8,24 @@
         <div class="overlay" @click.self="isOpen = false;">
           <div class="modal">
             <h1>Movie Details</h1>
-            <p>Name <input v-model="name" placeholder="edit me"></p>
-            <p>Genre <input v-model="genre" placeholder="edit me"></p>
-            <button v-on:click="addMovie">Add</button>&nbsp;
+            <p>Name <input v-model="name"></p>
+            <p>Genre <input v-model="genre"></p>
+
+            <button v-if="addMovie" v-on:click="add">Add</button>
+            <button v-if="updateMovie" v-on:click="update">Update</button>
+            &nbsp;
             <button v-on:click="clearAddForm">Clear</button>&nbsp;
-            <button @click="isOpen = false;">Close</button>
+            <button @click="isOpen = false;addMovie=false;updateMovie=false;">Close</button>
 
           </div>
         </div>
       </div>
     </transition>
-    <div v-if="!isOpen">
-    <button @click="isOpen = true;">Add Movie</button> 
-    </div> 
+    
+    <button @click="isOpen = true;addMovie=true;">Add Movie</button> 
+    
+    <br>
+    <br>
     <br>
    <table class="table-hover">
      <thead>
@@ -28,7 +33,8 @@
                     <th>Id</th>
                     <th>Name</th>
                     <th>Genre</th>
-                    
+                    <th>Update</th>
+                    <th>Delete</th>
                    
                 </tr>
             </thead>
@@ -37,6 +43,8 @@
 <td>{{item.Id}}</td>
 <td>{{item.Name}}</td>
 <td>{{item.Genre}}</td>
+<td><button @click="updateEvent(item.Id)">Update Movie</button></td>
+<td><button @click="isOpen = true;">Delete Movie</button></td>
 </tr>
             </tbody>
    </table>
@@ -59,7 +67,10 @@ export default {
       response: '',
       responseFlag:false,
       model: {},
-      isOpen: false
+      isOpen: false,
+      addMovie: false,
+      updateMovie: false,
+      tempId:-1
     };
   },
   async created() {
@@ -76,7 +87,7 @@ export default {
       }
     },
 
-   async addMovie(){
+   async add(){
       if(this.name.trim()!='' && this.name!=null && this.name!=undefined &&
       this.genre.trim()!='' && this.genre!=null && this.genre!=undefined
       ){
@@ -98,9 +109,38 @@ export default {
         alert("Enter all values")
       }
     },
+    updateEvent(id){
+      this.tempId=id
+this.isOpen = true
+this.updateMovie=true
+    },
+    async update(){
+      if(this.name.trim()!='' && this.name!=null && this.name!=undefined &&
+      this.genre.trim()!='' && this.genre!=null && this.genre!=undefined && this.tempId!=-1
+      ){
+        var data={'Id':this.tempId,'Name':this.name,'Genre':this.genre};
+        
+        var jsonData=JSON.stringify(data)
+        console.log(jsonData)
+        try {
+        this.response= await api.update(jsonData)
+        this.responseFlag=true
+        alert(this.response)
+        
+      } finally {
+        location.reload();
+        console.log( "In finally block.")
+
+      }
+      }
+      else{
+        alert("Enter all values")
+      }
+    },
     clearAddForm: function(event){
       this.name=''
       this.genre=''
+      this.tempId=-1
     }
   }
 }

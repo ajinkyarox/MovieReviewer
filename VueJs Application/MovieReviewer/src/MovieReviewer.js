@@ -28,4 +28,7 @@ export default {
   create(data) {
     return this.execute('post', '/POSTMOVIE', data)
   },
+  update(data){
+    return this.execute('put','/PUTMOVIE',data)
+  }
 }

@@ -79,6 +79,72 @@ namespace MovieReviewer.Controllers
             
         }
 
+        [System.Web.Mvc.HttpPut]
+        public string PutMovie([FromBody] movy movy)
+        {
+            dynamic jsonData = "";
+            Console.WriteLine(movy.Name);
+            try
+            {
+
+                /*movy movy = new movy();
+                 dynamic jsonData = JObject.Parse(requestbody.ToString());
+                 movy.Name = jsonData.Name;
+                 movy.Genre = jsonData.Genre;
+               */
+                bool flag = db.movies.Any(i => i.Id == movy.Id);
+                movy movie= db.movies.FirstOrDefault(i => i.Name == movy.Name);
+               
+                bool movieflag = true;
+                if (movie != null)
+                {
+                    if (movie.Id == movy.Id)
+                    {
+                        movieflag = true;
+                    }
+                    else
+                    {
+                        movieflag = false;
+                    }
+                }
+                if (!flag )
+                {
+                    jsonData = @"{  
+'status':'failure',  
+'responseMessage':'Movie does not exists'  
+}";
+                    return JsonConvert.SerializeObject(jsonData);
+
+
+                }
+                else if (!movieflag)
+                {
+                    jsonData = @"{  
+'status':'failure',  
+'responseMessage':'Movie exists with different Id.'  
+}";
+                    return JsonConvert.SerializeObject(jsonData);
+                }
+                movy temp=db.movies.FirstOrDefault(x => x.Id == movy.Id);
+                temp.Name = movy.Name;
+                temp.Genre = movy.Genre;
+                db.SaveChanges();
+                jsonData = @"{'status':'success','responseMessage':movy}";
+                return JsonConvert.SerializeObject(jsonData);
+            }
+            catch (Exception e)
+            {
+                var msg = e.Message;
+                /*dynamic*/
+                jsonData = @"{  
+'status':'failure',  
+'responseMessage':msg 
+}";
+                return JsonConvert.SerializeObject(jsonData);
+            }
+
+        }
+
         public string GetAll()
         {
 
