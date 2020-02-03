@@ -17,7 +17,7 @@ using MovieReviewer.Cors;
 
 namespace MovieReviewer.Controllers
 {
-    [AllowCrossSite]
+    
     public class moviesController : Controller
     {
         private moviereviewerEntities1 db = new moviereviewerEntities1();
@@ -29,7 +29,14 @@ namespace MovieReviewer.Controllers
             return "Hello from "+movy.Name;
         }
 
+        [System.Web.Mvc.HttpPost]
+        public string Post([FromBody] Newtonsoft.Json.Linq.JObject body)
+        {
+            
 
+            return body.ToString();
+        }
+        
         [System.Web.Mvc.HttpPost]
         public string PostMovie([FromBody] movy movy)
         {
@@ -38,13 +45,13 @@ namespace MovieReviewer.Controllers
             try
             {
 
-               /* movy movy = new movy();
+                /*movy movy = new movy();
                  dynamic jsonData = JObject.Parse(requestbody.ToString());
                  movy.Name = jsonData.Name;
                  movy.Genre = jsonData.Genre;
                */
-                movy movy_1 = db.movies.FirstOrDefault(i => i.Name == movy.Name);
-                if (movy != null)
+                bool flag = db.movies.Any(i => i.Name == movy.Name);
+                if (flag)
                 {
                     jsonData = @"{  
 'status':'failure',  
@@ -57,17 +64,15 @@ namespace MovieReviewer.Controllers
 
                 db.movies.Add(movy);
                 db.SaveChanges();
-                 jsonData = @"{  
-'status':'failure',  
-'responseMessage':movy  
-}";
+                 jsonData = @"{'status':'success','responseMessage':movy}";
                 return JsonConvert.SerializeObject(jsonData);
             }
             catch(Exception e)
             {
-                 jsonData = @"{  
+                var msg = e.Message;   
+                /*dynamic*/ jsonData = @"{  
 'status':'failure',  
-'responseMessage':'Exception' 
+'responseMessage':msg 
 }";
                 return JsonConvert.SerializeObject(jsonData);
             }

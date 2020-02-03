@@ -9,10 +9,14 @@ const client = axios.create({
 export default {
   async execute(method, resource, data) {
     
+  
     return client({
       method,
       url: resource,
-      data
+      data,
+      headers:{
+        'Content-Type': 'application/json'
+      }
       
     }).then(req => {
       return req.data
@@ -20,5 +24,8 @@ export default {
   },
   getAll() {
     return this.execute('get', '/GETALL')
-  }
+  },
+  create(data) {
+    return this.execute('post', '/POSTMOVIE', data)
+  },
 }

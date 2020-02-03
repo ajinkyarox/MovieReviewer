@@ -56,6 +56,8 @@ export default {
       name:'',
       genre:'',
       result: '',
+      response: '',
+      responseFlag:false,
       model: {},
       isOpen: false
     };
@@ -74,7 +76,7 @@ export default {
       }
     },
 
-    addMovie: function(event){
+   async addMovie(){
       if(this.name.trim()!='' && this.name!=null && this.name!=undefined &&
       this.genre.trim()!='' && this.genre!=null && this.genre!=undefined
       ){
@@ -82,23 +84,18 @@ export default {
         
         var jsonData=JSON.stringify(data)
         console.log(jsonData)
-        axios.post('https://localhost:44380/movies/POSTMOVIE',  jsonData ,
-                {
-        headers: {
-          'Content-type': 'application/json'
-        }
+        try {
+        this.response= await api.create(jsonData)
+        this.responseFlag=true
+        
+      } finally {
+        location.reload();
+        console.log( "In finally block.")
+
       }
-                )
-                .then(function (response) {
-                    currentObj.output = response.data;
-                    alert(currentObj.output)
-                    //vm.$forceUpdate();
-                })
-                .catch(function (error) {
-                    currentObj.output = error;
-                   alert(currentObj.output )
-                    //vm.$forceUpdate();
-                });
+      }
+      else{
+        alert("Enter all values")
       }
     },
     clearAddForm: function(event){
