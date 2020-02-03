@@ -170,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\logincredentialsController.cs" />
     <Compile Include="Controllers\moviesController.cs" />
     <Compile Include="Cors\AllowCrossSiteAttribute.cs" />
     <Compile Include="EntityModel.Context.cs">
@@ -189,6 +190,9 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="logincredential.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="movy.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
@@ -214,6 +218,11 @@
     <Content Include="Views\movies\Index.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Views\logincredentials\Create.cshtml" />
+    <Content Include="Views\logincredentials\Delete.cshtml" />
+    <Content Include="Views\logincredentials\Details.cshtml" />
+    <Content Include="Views\logincredentials\Edit.cshtml" />
+    <Content Include="Views\logincredentials\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

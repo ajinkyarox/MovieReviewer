@@ -178,6 +178,8 @@ this.updateMovie=true
     }
   }
 }
+
+
 </script>
 <style scoped>
 .modal {
