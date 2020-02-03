@@ -30,5 +30,8 @@ export default {
   },
   update(data){
     return this.execute('put','/PUTMOVIE',data)
+  },
+  delete(id){
+    return this.execute('delete','/DELETEMOVIE?Id='+id)
   }
 }

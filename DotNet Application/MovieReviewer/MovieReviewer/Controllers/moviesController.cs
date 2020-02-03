@@ -79,6 +79,46 @@ namespace MovieReviewer.Controllers
             
         }
 
+        [System.Web.Mvc.HttpDelete]
+        public string DeleteMovie([FromUri] int id)
+        {
+
+
+            dynamic jsonData = "";
+            Console.WriteLine(id);
+            try
+            {
+                bool flag = db.movies.Any(i => i.Id == id);
+                if (!flag)
+                {
+                    jsonData = @"{  
+'status':'failure',  
+'responseMessage':'Movie does not exists'  
+}";
+                    return JsonConvert.SerializeObject(jsonData);
+
+
+                }
+                movy movy = db.movies.FirstOrDefault(i => i.Id == id);
+
+                db.movies.Remove(movy);
+                db.SaveChanges();
+                jsonData = @"{'status':'success','responseMessage':movy}";
+                return JsonConvert.SerializeObject(jsonData);
+            }
+            catch (Exception e)
+            {
+                var msg = e.Message;
+                /*dynamic*/
+                jsonData = @"{  
+'status':'failure',  
+'responseMessage':msg 
+}";
+                return JsonConvert.SerializeObject(jsonData);
+            }
+
+        }
+
         [System.Web.Mvc.HttpPut]
         public string PutMovie([FromBody] movy movy)
         {

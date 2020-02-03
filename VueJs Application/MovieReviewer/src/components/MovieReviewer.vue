@@ -5,17 +5,23 @@
    
 <transition name="modal">
       <div v-if="isOpen">
+        
         <div class="overlay" @click.self="isOpen = false;">
           <div class="modal">
-            <h1>Movie Details</h1>
+            <h1 v-if="!deleteMovie">Movie Details</h1>
+            <div v-if="!deleteMovie">
             <p>Name <input v-model="name"></p>
             <p>Genre <input v-model="genre"></p>
-
+            </div>
+            <div v-if="deleteMovie">
+              <p>Are you sure you want to delete the selected movie?</p>
+            </div>
             <button v-if="addMovie" v-on:click="add">Add</button>
             <button v-if="updateMovie" v-on:click="update">Update</button>
+            <button v-if="deleteMovie" v-on:click="deleteItem" >Delete</button>
             &nbsp;
-            <button v-on:click="clearAddForm">Clear</button>&nbsp;
-            <button @click="isOpen = false;addMovie=false;updateMovie=false;">Close</button>
+            <button v-if="!deleteMovie" v-on:click="clearAddForm">Clear</button>&nbsp;
+            <button @click="isOpen = false;addMovie=false;updateMovie=false;deleteMovie=false;">Close</button>
 
           </div>
         </div>
@@ -44,7 +50,7 @@
 <td>{{item.Name}}</td>
 <td>{{item.Genre}}</td>
 <td><button @click="updateEvent(item.Id)">Update Movie</button></td>
-<td><button @click="isOpen = true;">Delete Movie</button></td>
+<td><button @click="deleteEvent(item.Id)">Delete Movie</button></td>
 </tr>
             </tbody>
    </table>
@@ -70,7 +76,8 @@ export default {
       isOpen: false,
       addMovie: false,
       updateMovie: false,
-      tempId:-1
+      tempId:-1,
+      deleteMovie:false
     };
   },
   async created() {
@@ -101,6 +108,7 @@ export default {
         
       } finally {
         location.reload();
+        this.clearAddForm()
         console.log( "In finally block.")
 
       }
@@ -113,6 +121,11 @@ export default {
       this.tempId=id
 this.isOpen = true
 this.updateMovie=true
+    },
+    deleteEvent(id){
+      this.tempId=id
+      this.deleteMovie=true
+      this.isOpen=true
     },
     async update(){
       if(this.name.trim()!='' && this.name!=null && this.name!=undefined &&
@@ -129,12 +142,33 @@ this.updateMovie=true
         
       } finally {
         location.reload();
+        this.clearAddForm()
         console.log( "In finally block.")
 
       }
       }
       else{
         alert("Enter all values")
+      }
+    },
+    
+    async deleteItem(){
+      
+      if(this.tempId!=-1){
+       try {
+        this.response= await api.delete(this.tempId)
+        this.responseFlag=true
+        alert(this.response)
+        
+      } finally {
+       location.reload();
+       this.clearAddForm()
+        console.log( "In finally block.")
+
+      } 
+      }
+      else{
+        alert("Incorrect Id")
       }
     },
     clearAddForm: function(event){
