@@ -5,7 +5,12 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Net.Http;
+using System.Web.Http;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using MovieReviewer;
 
 namespace MovieReviewer.Controllers
@@ -18,6 +23,81 @@ namespace MovieReviewer.Controllers
         public ActionResult Index()
         {
             return View(db.logincredentials.ToList());
+        }
+
+
+        [System.Web.Mvc.HttpPost]
+        public string login([FromBody] logincredential lcred)
+        {
+            dynamic jsonData = "";
+
+            try
+            {
+
+      
+                bool flag = db.logincredentials.Any(i => i.username == lcred.username && i.password==lcred.password);
+                if (!flag)
+                {
+          
+                    return "Invalid Username/Password";
+
+
+                }
+
+                db.logincredentials.Add(lcred);
+                db.SaveChanges();
+               
+                return "Success";
+            }
+            catch (Exception e)
+            {
+                var msg = e.Message;
+               
+                return "Failure:"+msg;
+            }
+        }
+
+        [System.Web.Mvc.HttpPost]
+        public string PostLogin([FromBody] logincredential lcred)
+        {
+            dynamic jsonData = "";
+            
+            try
+            {
+
+                /*movy movy = new movy();
+                 dynamic jsonData = JObject.Parse(requestbody.ToString());
+                 movy.Name = jsonData.Name;
+                 movy.Genre = jsonData.Genre;
+               */
+                bool flag = db.logincredentials.Any(i => i.username == lcred.username);
+                if (flag)
+                {
+                    jsonData = @"{  
+'status':'failure',  
+'responseMessage':'Username Already exists'  
+}";
+                    return JsonConvert.SerializeObject(jsonData);
+
+
+                }
+
+                db.logincredentials.Add(lcred);
+                db.SaveChanges();
+                jsonData = @"{'status':'success','responseMessage':lcred}";
+                return JsonConvert.SerializeObject(jsonData);
+            }
+            catch (Exception e)
+            {
+                var msg = e.Message;
+                /*dynamic*/
+                jsonData = @"{  
+'status':'failure',  
+'responseMessage':msg 
+}";
+                return JsonConvert.SerializeObject(jsonData);
+            }
+
         }
 
         // GET: logincredentials/Details/5
@@ -44,7 +124,7 @@ namespace MovieReviewer.Controllers
         // POST: logincredentials/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "lid,username,password")] logincredential logincredential)
         {
@@ -76,7 +156,7 @@ namespace MovieReviewer.Controllers
         // POST: logincredentials/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [System.Web.Mvc.HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "lid,username,password")] logincredential logincredential)
         {
@@ -105,7 +185,7 @@ namespace MovieReviewer.Controllers
         }
 
         // POST: logincredentials/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [System.Web.Mvc.HttpPost, System.Web.Mvc.ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

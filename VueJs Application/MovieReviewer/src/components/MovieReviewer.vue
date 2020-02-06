@@ -1,7 +1,9 @@
 <template>
  <div align="center">
    <h1>MovieReviewer</h1>
-  
+  <div align="right">
+    <button v-on:click="logout">Logout</button>
+  </div>
    
 <transition name="modal">
       <div v-if="isOpen">
@@ -62,6 +64,7 @@
 
 import api from '@/MovieReviewer';
 import axios from 'axios'
+import router from '../router'
 
 export default {
   data() {
@@ -170,6 +173,9 @@ this.updateMovie=true
       else{
         alert("Incorrect Id")
       }
+    },
+    logout(){
+router.push({name:'HelloWorld'})
     },
     clearAddForm: function(event){
       this.name=''
