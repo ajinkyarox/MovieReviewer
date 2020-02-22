@@ -49,7 +49,7 @@
             <tbody v-for="(item) in result" :key="item.Id">
 <tr>
 <td> {{item.Id}}</td>
-<td><button @click="movieDetails(item.Id)" >{{item.Name}}</button></td>
+<td><button @click="movieDetails(item.Id,item.Name)" >{{item.Name}}</button></td>
 <td>{{item.Genre}}</td>
 <td><button @click="updateEvent(item.Id)">Update Movie</button></td>
 <td><button @click="deleteEvent(item.Id)">Delete Movie</button></td>
@@ -130,8 +130,8 @@ this.updateMovie=true
       this.deleteMovie=true
       this.isOpen=true
     },
-    movieDetails(id){
-router.push({ path: 'moviereviewer/movie', query: { Id: id }})
+    movieDetails(id,name){
+router.push({ path: 'moviereviewer/movie', query: { Id: id,Name:name }})
     },
     async update(){
       if(this.name.trim()!='' && this.name!=null && this.name!=undefined &&
