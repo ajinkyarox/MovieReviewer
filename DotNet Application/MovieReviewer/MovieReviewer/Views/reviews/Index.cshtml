@@ -1,0 +1,39 @@
+﻿@model IEnumerable<MovieReviewer.review>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Review1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.movy.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Review1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.movy.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Rid }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Rid }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Rid })
+        </td>
+    </tr>
+}
+
+</table>

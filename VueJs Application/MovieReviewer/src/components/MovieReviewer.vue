@@ -131,7 +131,7 @@ this.updateMovie=true
       this.isOpen=true
     },
     movieDetails(id,name){
-router.push({ path: 'moviereviewer/movie', query: { Id: id,Name:name }})
+router.push({ path: 'movie', query: { Id: id,Name:name }})
     },
     async update(){
       if(this.name.trim()!='' && this.name!=null && this.name!=undefined &&

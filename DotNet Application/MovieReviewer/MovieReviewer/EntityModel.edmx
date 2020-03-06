@@ -13,6 +13,14 @@
           <Property Name="username" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
         </EntityType>
+        <EntityType Name="Moviereviews">
+          <Key>
+            <PropertyRef Name="Rid" />
+          </Key>
+          <Property Name="Rid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Review" Type="varchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="movies">
           <Key>
             <PropertyRef Name="Id" />
@@ -23,6 +31,7 @@
         </EntityType>
         <EntityContainer Name="moviereviewerModelStoreContainer">
           <EntitySet Name="logincredentials" EntityType="Self.logincredentials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Moviereviews" EntityType="Self.Moviereviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="movies" EntityType="Self.movies" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -40,6 +49,7 @@
         <EntityContainer Name="moviereviewerEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="movies" EntityType="Self.movy" />
           <EntitySet Name="logincredentials" EntityType="moviereviewerModel.logincredential" />
+          <EntitySet Name="Moviereviews" EntityType="moviereviewerModel.Moviereview" />
         </EntityContainer>
         <EntityType Name="logincredential">
           <Key>
@@ -48,6 +58,14 @@
           <Property Name="lid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="username" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="password" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Moviereview">
+          <Key>
+            <PropertyRef Name="Rid" />
+          </Key>
+          <Property Name="Rid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Review" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -70,6 +88,15 @@
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="lid" ColumnName="lid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Moviereviews">
+            <EntityTypeMapping TypeName="moviereviewerModel.Moviereview">
+              <MappingFragment StoreEntitySet="Moviereviews">
+                <ScalarProperty Name="Review" ColumnName="Review" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Rid" ColumnName="Rid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

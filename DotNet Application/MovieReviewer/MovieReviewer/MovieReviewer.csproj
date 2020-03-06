@@ -171,6 +171,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\logincredentialsController.cs" />
+    <Compile Include="Controllers\MoviereviewsController.cs" />
     <Compile Include="Controllers\moviesController.cs" />
     <Compile Include="Cors\AllowCrossSiteAttribute.cs" />
     <Compile Include="EntityModel.Context.cs">
@@ -192,6 +193,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="logincredential.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Moviereview.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="movy.cs">
@@ -224,6 +228,21 @@
     <Content Include="Views\logincredentials\Details.cshtml" />
     <Content Include="Views\logincredentials\Edit.cshtml" />
     <Content Include="Views\logincredentials\Index.cshtml" />
+    <Content Include="Views\reviews\Create.cshtml" />
+    <Content Include="Views\reviews\Delete.cshtml" />
+    <Content Include="Views\reviews\Details.cshtml" />
+    <Content Include="Views\reviews\Edit.cshtml" />
+    <Content Include="Views\reviews\Index.cshtml" />
+    <Content Include="Views\review1\Create.cshtml" />
+    <Content Include="Views\review1\Delete.cshtml" />
+    <Content Include="Views\review1\Details.cshtml" />
+    <Content Include="Views\review1\Edit.cshtml" />
+    <Content Include="Views\review1\Index.cshtml" />
+    <Content Include="Views\Moviereviews\Create.cshtml" />
+    <Content Include="Views\Moviereviews\Delete.cshtml" />
+    <Content Include="Views\Moviereviews\Details.cshtml" />
+    <Content Include="Views\Moviereviews\Edit.cshtml" />
+    <Content Include="Views\Moviereviews\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

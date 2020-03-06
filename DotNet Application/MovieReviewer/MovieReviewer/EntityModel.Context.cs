@@ -27,5 +27,6 @@ namespace MovieReviewer
     
         public virtual DbSet<movy> movies { get; set; }
         public virtual DbSet<logincredential> logincredentials { get; set; }
+        public virtual DbSet<Moviereview> Moviereviews { get; set; }
     }
 }

@@ -162,7 +162,6 @@ G:\Project\MovieReviewer\DotNet Application\MovieReviewer\MovieReviewer\bin\Syst
 G:\Project\MovieReviewer\DotNet Application\MovieReviewer\MovieReviewer\bin\System.Web.Helpers.xml
 G:\Project\MovieReviewer\DotNet Application\MovieReviewer\MovieReviewer\bin\System.Web.Mvc.xml
 G:\Project\MovieReviewer\DotNet Application\MovieReviewer\MovieReviewer\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-G:\Project\MovieReviewer\DotNet Application\MovieReviewer\MovieReviewer\obj\Debug\MovieReviewer.csprojAssemblyReference.cache
 G:\Project\MovieReviewer\DotNet Application\MovieReviewer\MovieReviewer\obj\Debug\MovieReviewer.csproj.CopyComplete
 G:\Project\MovieReviewer\DotNet Application\MovieReviewer\MovieReviewer\obj\Debug\MovieReviewer.dll
 G:\Project\MovieReviewer\DotNet Application\MovieReviewer\MovieReviewer\obj\Debug\MovieReviewer.pdb
@@ -175,3 +174,4 @@ G:\Project\MovieReviewer\DotNet Application\MovieReviewer\MovieReviewer\bin\Micr
 G:\Project\MovieReviewer\DotNet Application\MovieReviewer\MovieReviewer\bin\Microsoft.Owin.Host.HttpListener.xml
 G:\Project\MovieReviewer\DotNet Application\MovieReviewer\MovieReviewer\bin\Microsoft.Owin.Hosting.xml
 G:\Project\MovieReviewer\DotNet Application\MovieReviewer\MovieReviewer\bin\System.Web.Http.Owin.xml
+G:\Project\MovieReviewer\DotNet Application\MovieReviewer\MovieReviewer\obj\Debug\MovieReviewer.csprojAssemblyReference.cache
