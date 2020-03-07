@@ -52,7 +52,9 @@
             <tbody v-for="(item) in result" :key="item.Id">
 <tr>
 <td> {{item.Id}}</td>
-<td><button @click="movieDetails(item.Id,item.Name)" >{{item.Name}}</button></td>
+<td><button @click="movieDetails(item.Id,item.Name)" style="background: none!important;border: none;
+  padding: 0!important;text-decoration: underline;
+  cursor: pointer;font-family: arial, sans-serif;">{{item.Name}}</button></td>
 <td>{{item.Genre}}</td>
 <td><button @click="updateEvent(item.Id)">Update Movie</button></td>
 <td><button @click="deleteEvent(item.Id)">Delete Movie</button></td>

@@ -5,7 +5,10 @@
    {{Name}}
 
    <br><br><br>
-   Review the movie<br><br>
+   <div align="left">
+    <button v-on:click="back">{{backstr}}</button>
+  </div>
+   Review the movie
 <transition name="modal">
       <div v-if="isOpen">
         
@@ -44,8 +47,8 @@
 <td> <h2>{{item.username}} </h2></td>
 <td>{{item.Review}}</td>
 
-<td><button @click="updateEvent(item.Rid)">Update Review</button></td>
-<td><button @click="deleteEvent(item.Rid)">Delete Review</button></td>
+<td><button v-if="uname==item.username" @click="updateEvent(item.Rid)">Update Review</button></td>
+<td><button v-if="uname==item.username" @click="deleteEvent(item.Rid)">Delete Review</button></td>
 </tr>
             </tbody>
    </table>
@@ -60,12 +63,15 @@
 
 </template>
 <script>
+import router from '../router'
 import api from '@/Movie';
 export default {
     data(){
         
      return{  
        name:'',
+       backstr:'<< Back',
+       uname:localStorage.getItem('username'),
          result:'',
          Id: this.$route.query.Id,
          Name: this.$route.query.Name,
@@ -91,7 +97,9 @@ export default {
         this.loading = false
       }
     },
-
+back(){
+router.push({ path: '/moviereviewer'})
+},
 updateEvent(id){
       this.Did=id
 this.isOpen = true
@@ -107,12 +115,14 @@ this.updateMovie=true
       
       if(this.Did!=undefined || this.Did!='' || this.Did!=null){
        try {
-        this.response= await api.delete(Did)
+        this.response= await api.delete(this.Did)
         this.responseFlag=true
-        alert(this.response)
+        
         
       } finally {
+        alert(this.response)
        location.reload();
+      this.Did=''
       
         console.log( "In finally block.")
 
@@ -138,7 +148,7 @@ async update(){
         location.reload();
         this.clearAddForm()
         console.log( "In finally block.")
-
+this.Did=''
       }
       }
       else{
