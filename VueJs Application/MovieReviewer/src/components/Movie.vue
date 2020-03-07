@@ -21,7 +21,7 @@ export default {
      return{  
          message:'',
          Id: this.$route.query.Id,
-         Name: this.$route.query.Name
+         Name: this.$route.query.Name,
          
      
      };
@@ -32,7 +32,8 @@ export default {
         if(message.value.trim()!='' && message.value!=null && message.value!=undefined 
       
       ){
-        var data={'Id':this.Id,'Review':message.value};
+        console.log(localStorage.getItem('username'))
+        var data={'Id':this.Id,'Review':message.value,'username':localStorage.getItem('username')};
         
         var jsonData=JSON.stringify(data)
         console.log(jsonData)
@@ -41,8 +42,8 @@ export default {
         this.responseFlag=true
         
       } finally {
-          //message.value=''
-        //location.reload();
+        message.value=''
+        location.reload();
         
         console.log( "In finally block.")
 

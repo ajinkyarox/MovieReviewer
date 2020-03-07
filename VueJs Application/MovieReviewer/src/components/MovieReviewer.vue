@@ -1,6 +1,9 @@
 <template>
  <div align="center">
    <h1>MovieReviewer</h1>
+<br>
+<p>{{uname}}</p>
+
   <div align="right">
     <button v-on:click="logout">Logout</button>
   </div>
@@ -80,7 +83,8 @@ export default {
       addMovie: false,
       updateMovie: false,
       tempId:-1,
-      deleteMovie:false
+      deleteMovie:false,
+      uname:localStorage.getItem('username')
     };
   },
   async created() {
@@ -131,7 +135,7 @@ this.updateMovie=true
       this.isOpen=true
     },
     movieDetails(id,name){
-router.push({ path: 'movie', query: { Id: id,Name:name }})
+router.push({ path: '/moviereviewer/movie', query: { Id: id,Name:name }})
     },
     async update(){
       if(this.name.trim()!='' && this.name!=null && this.name!=undefined &&
@@ -179,6 +183,7 @@ router.push({ path: 'movie', query: { Id: id,Name:name }})
     },
     logout(){
 router.push({name:'HelloWorld'})
+localStorage.setItem('username','')
     },
     clearAddForm: function(event){
       this.name=''

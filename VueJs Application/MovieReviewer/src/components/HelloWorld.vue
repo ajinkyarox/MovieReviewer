@@ -66,6 +66,11 @@ try {
         
         if(this.response=="Success"){
 router.push("/#/moviereviewer")
+localStorage.setItem('username', this.username)
+console.log(localStorage.getItem('username'))
+        }
+        else{
+          alert(this.response.responseMessage)
         }
       } finally {
         location.reload();

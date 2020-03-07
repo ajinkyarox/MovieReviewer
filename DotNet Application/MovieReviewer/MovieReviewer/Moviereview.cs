@@ -17,5 +17,6 @@ namespace MovieReviewer
         public int Rid { get; set; }
         public int Id { get; set; }
         public string Review { get; set; }
+        public string username { get; set; }
     }
 }
