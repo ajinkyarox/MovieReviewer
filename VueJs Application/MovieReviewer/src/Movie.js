@@ -29,7 +29,7 @@ export default {
     return this.execute('post', '/POSTREVIEW', data)
   },
   update(data){
-    return this.execute('put','/PUTMOVIE',data)
+    return this.execute('put','/PUTREVIEW',data)
   },
   delete(id){
     return this.execute('delete','/DELETEREVIEW?Rid='+id)

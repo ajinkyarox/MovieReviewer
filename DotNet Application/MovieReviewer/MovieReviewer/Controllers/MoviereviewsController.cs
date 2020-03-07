@@ -65,6 +65,74 @@ namespace MovieReviewer.Controllers
 
         }
 
+        [System.Web.Mvc.HttpPut]
+        public string PutReview([FromBody] Moviereview movy)
+        {
+            dynamic jsonData = "";
+
+            try
+            {
+
+                /*movy movy = new movy();
+                 dynamic jsonData = JObject.Parse(requestbody.ToString());
+                 movy.Name = jsonData.Name;
+                 movy.Genre = jsonData.Genre;
+               */
+                bool flag = db.Moviereviews.Any(i => i.Rid == movy.Rid);
+                Moviereview movie = db.Moviereviews.FirstOrDefault(i => i.Review == movy.Review);
+
+                bool movieflag = true;
+                if (movie != null)
+                {
+                    if (movie.Rid == movy.Rid)
+                    {
+                        movieflag = true;
+                    }
+                    else
+                    {
+                        movieflag = false;
+                    }
+                }
+                if (!flag)
+                {
+                    jsonData = @"{  
+'status':'failure',  
+'responseMessage':'Movie does not exists'  
+}";
+                    return JsonConvert.SerializeObject(jsonData);
+
+
+                }
+                else if (!movieflag)
+                {
+                    jsonData = @"{  
+'status':'failure',  
+'responseMessage':'Movie exists with different Id.'  
+}";
+                    return JsonConvert.SerializeObject(jsonData);
+                }
+                Moviereview temp = db.Moviereviews.FirstOrDefault(x => x.Rid == movy.Rid);
+                temp.Review = movy.Review;
+                
+                db.SaveChanges();
+                jsonData = @"{'status':'success','responseMessage':movy}";
+                return JsonConvert.SerializeObject(jsonData);
+            }
+            catch (Exception e)
+            {
+                var msg = e.Message;
+                /*dynamic*/
+                jsonData = @"{  
+'status':'failure',  
+'responseMessage':msg 
+}";
+                return JsonConvert.SerializeObject(jsonData);
+            }
+
+        }
+
+
+
         [System.Web.Mvc.HttpPost]
         public string PostReview([FromBody] Moviereview movy)
         {

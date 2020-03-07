@@ -93,7 +93,7 @@ export default {
     },
 
 updateEvent(id){
-      
+      this.Did=id
 this.isOpen = true
 this.updateMovie=true
     },
@@ -119,8 +119,32 @@ this.updateMovie=true
       } 
       }
       
-    }
-,async addReview(){
+    },
+
+
+async update(){
+      if(this.name.trim()!='' && this.name!=null && this.name!=undefined 
+      ){
+        var data={'Rid':this.Did,'Review':this.name};
+        
+        var jsonData=JSON.stringify(data)
+        console.log(jsonData)
+        try {
+        this.response= await api.update(jsonData)
+        this.responseFlag=true
+        alert(this.response)
+        
+      } finally {
+        location.reload();
+        this.clearAddForm()
+        console.log( "In finally block.")
+
+      }
+      }
+      else{
+        alert("Enter all values")
+      }
+    },async addReview(){
   console.log(this.result)
         if(message.value.trim()!='' && message.value!=null && message.value!=undefined 
       
