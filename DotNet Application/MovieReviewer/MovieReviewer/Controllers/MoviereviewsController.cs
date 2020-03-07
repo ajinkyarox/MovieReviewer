@@ -19,8 +19,54 @@ namespace MovieReviewer.Controllers
     {
         private moviereviewerEntities1 db = new moviereviewerEntities1();
 
+        public string GetAll([FromUri] int id)
+        {
+
+            return JsonConvert.SerializeObject(db.Moviereviews.Where(x=>x.Id==id));
+        }
+
+        [System.Web.Mvc.HttpDelete]
+        public string DeleteReview([FromUri] int Rid)
+        {
+
+
+            dynamic jsonData = "";
+           
+            try
+            {
+                bool flag = db.Moviereviews.Any(i => i.Rid == Rid);
+                if (!flag)
+                {
+                    jsonData = @"{  
+'status':'failure',  
+'responseMessage':'Movie does not exists'  
+}";
+                    return JsonConvert.SerializeObject(jsonData);
+
+
+                }
+                Moviereview movy = db.Moviereviews.FirstOrDefault(i => i.Rid == Rid);
+
+                db.Moviereviews.Remove(movy);
+                db.SaveChanges();
+                jsonData = @"{'status':'success','responseMessage':movy}";
+                return JsonConvert.SerializeObject(jsonData);
+            }
+            catch (Exception e)
+            {
+                var msg = e.Message;
+                /*dynamic*/
+                jsonData = @"{  
+'status':'failure',  
+'responseMessage':msg 
+}";
+                return JsonConvert.SerializeObject(jsonData);
+            }
+
+        }
+
         [System.Web.Mvc.HttpPost]
-        public string PostMovie([FromBody] Moviereview movy)
+        public string PostReview([FromBody] Moviereview movy)
         {
             dynamic jsonData = "";
            

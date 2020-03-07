@@ -6,29 +6,122 @@
 
    <br><br><br>
    Review the movie<br><br>
+<transition name="modal">
+      <div v-if="isOpen">
+        
+        <div class="overlay" @click.self="isOpen = false;">
+          <div class="modal">
+            <h1 v-if="!deleteMovie">Review Details</h1>
+            <div v-if="!deleteMovie">
+            <p>Review <input v-model="name"></p>
+           
+            </div>
+            <div v-if="deleteMovie">
+              <p>Are you sure you want to delete the selected review?</p>
+            </div>
+            
+            <button v-if="updateMovie" v-on:click="update">Update</button>
+            <button v-if="deleteMovie" v-on:click="deleteItem" >Delete</button>
+            &nbsp;
+            <button v-if="!deleteMovie" v-on:click="clearAddForm">Clear</button>&nbsp;
+            <button @click="isOpen = false;updateMovie=false;deleteMovie=false;">Close</button>
 
+          </div>
+        </div>
+      </div>
+    </transition>
+    <br><br>
 
 
 <textarea id="message"/>
 <br><button v-on:click="addReview">Add Review</button>
+<br><br><br>
+<div align="center">
+<table class="table-hover">
+     
+            <tbody v-for="(item) in result" :key="item.Rid">
+<tr>
+<td> <h2>{{item.username}} </h2></td>
+<td>{{item.Review}}</td>
+
+<td><button @click="updateEvent(item.Rid)">Update Review</button></td>
+<td><button @click="deleteEvent(item.Rid)">Delete Review</button></td>
+</tr>
+            </tbody>
+   </table>
+
+
+
 </div>
+
+</div>
+
+
+
 </template>
 <script>
 import api from '@/Movie';
 export default {
     data(){
-        console.log(this.$route.query.Id)
+        
      return{  
-         message:'',
+       name:'',
+         result:'',
          Id: this.$route.query.Id,
          Name: this.$route.query.Name,
-         
-     
+         loading: false,
+         isOpen: false,
+      updateMovie: false,
+       deleteMovie:false,
+     Did:''
      };
     
     },
+    async created() {
+    this.getAll()
+  },
     methods: {
-    async addReview(){
+      async getAll() {
+      this.loading = true
+
+      try {
+        this.result = await api.getAll(this.Id)
+        console.log(this.result)
+      } finally {
+        this.loading = false
+      }
+    },
+
+updateEvent(id){
+      
+this.isOpen = true
+this.updateMovie=true
+    },
+        deleteEvent(id){
+      this.Did=id
+      this.deleteMovie=true
+      this.isOpen=true
+    },
+    
+    async deleteItem(){
+      
+      if(this.Did!=undefined || this.Did!='' || this.Did!=null){
+       try {
+        this.response= await api.delete(Did)
+        this.responseFlag=true
+        alert(this.response)
+        
+      } finally {
+       location.reload();
+      
+        console.log( "In finally block.")
+
+      } 
+      }
+      
+    }
+,async addReview(){
+  console.log(this.result)
         if(message.value.trim()!='' && message.value!=null && message.value!=undefined 
       
       ){
@@ -56,3 +149,43 @@ export default {
     }
 }
 </script>
+<style scoped>
+.modal {
+  width: 500px;
+  margin: 0px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px 3px;
+  transition: all 0.2s ease-in;
+  font-family: Helvetica, Arial, sans-serif;
+}
+.fadeIn-enter {
+  opacity: 0;
+}
+
+.fadeIn-leave-active {
+  opacity: 0;
+  transition: all 0.2s step-end;
+}
+
+.fadeIn-enter .modal,
+.fadeIn-leave-active.modal {
+  transform: scale(1.1);
+}
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: #00000094;
+  z-index: 999;
+  transition: opacity 0.2s ease;
+}
+</style>

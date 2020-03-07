@@ -22,16 +22,16 @@ export default {
       return req.data
     })
   },
-  getAll() {
-    return this.execute('get', '/GETALL')
+  getAll(Id) {
+    return this.execute('get', '/GETALL?Id='+Id)
   },
   create(data) {
-    return this.execute('post', '/POSTMOVIE', data)
+    return this.execute('post', '/POSTREVIEW', data)
   },
   update(data){
     return this.execute('put','/PUTMOVIE',data)
   },
   delete(id){
-    return this.execute('delete','/DELETEMOVIE?Id='+id)
+    return this.execute('delete','/DELETEREVIEW?Rid='+id)
   }
 }
