@@ -39,7 +39,7 @@
 <textarea id="message"/>
 <br><button v-on:click="addReview">Add Review</button>
 <br><br><br>
-<div align="center">
+<div align="left">
 <table class="table-hover">
      
             <tbody v-for="(item) in result" :key="item.Rid">

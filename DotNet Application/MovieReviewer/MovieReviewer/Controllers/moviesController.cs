@@ -102,6 +102,7 @@ namespace MovieReviewer.Controllers
                 movy movy = db.movies.FirstOrDefault(i => i.Id == id);
 
                 db.movies.Remove(movy);
+                db.Moviereviews.RemoveRange(db.Moviereviews.Where(c => c.Id == id));
                 db.SaveChanges();
                 jsonData = @"{'status':'success','responseMessage':movy}";
                 return JsonConvert.SerializeObject(jsonData);
