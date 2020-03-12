@@ -8,6 +8,7 @@
         <EntityTypeShape EntityType="moviereviewerModel.movy" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="moviereviewerModel.logincredential" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="moviereviewerModel.Moviereview" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="moviereviewerModel.reviewscore" Width="1.5" PointX="3.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

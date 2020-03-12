@@ -11,7 +11,9 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using MovieReviewer.Others;
 using MovieReviewer;
+
 
 namespace MovieReviewer.Controllers
 {
@@ -151,8 +153,47 @@ namespace MovieReviewer.Controllers
 
 
                 }
+                Constants ct = new Constants();
+                int pScore = 0;
+                int nScore = 0;
+                List<string> charsInReview =new List<string>(movy.Review.Split(' '));
+                foreach(string st in ct.positiveWords)
+                {
+                    foreach(string stemp in charsInReview)
+                    {
+                        if (stemp.ToLower().Equals(st))
+                        {
+                            pScore += 1;
+                        }
+                    }
+                }
+
+                foreach (string st in ct.negativeWords)
+                {
+                    foreach (string stemp in charsInReview)
+                    {
+                        if (stemp.ToLower().Equals(st))
+                        {
+                            nScore += 1;
+                        }
+                    }
+                }
+                if (pScore > nScore)
+                {
+                    nScore = 0;
+                }
+                else if (pScore == nScore)
+                {
+                    pScore = 0;
+                    nScore = 0;
+                }
+                else
+                {
+                    pScore = 0;
+                }
 
                 db.Moviereviews.Add(movy);
+                
                 db.SaveChanges();
                 jsonData = @"{'status':'success','responseMessage':movy}";
                 return JsonConvert.SerializeObject(jsonData);

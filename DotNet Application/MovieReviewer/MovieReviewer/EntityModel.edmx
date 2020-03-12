@@ -30,10 +30,20 @@
           <Property Name="Name" Type="varchar(max)" Nullable="false" />
           <Property Name="Genre" Type="varchar(max)" Nullable="false" />
         </EntityType>
+        <EntityType Name="reviewscore">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Rid" Type="int" Nullable="false" />
+          <Property Name="Pscore" Type="int" Nullable="false" />
+          <Property Name="Nscore" Type="int" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="moviereviewerModelStoreContainer">
           <EntitySet Name="logincredentials" EntityType="Self.logincredentials" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Moviereviews" EntityType="Self.Moviereviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="movies" EntityType="Self.movies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reviewscore" EntityType="Self.reviewscore" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -51,6 +61,7 @@
           <EntitySet Name="movies" EntityType="Self.movy" />
           <EntitySet Name="logincredentials" EntityType="moviereviewerModel.logincredential" />
           <EntitySet Name="Moviereviews" EntityType="moviereviewerModel.Moviereview" />
+          <EntitySet Name="reviewscores" EntityType="moviereviewerModel.reviewscore" />
         </EntityContainer>
         <EntityType Name="logincredential">
           <Key>
@@ -68,6 +79,15 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Review" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="username" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="reviewscore">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Rid" Type="Int32" Nullable="false" />
+          <Property Name="Pscore" Type="Int32" Nullable="false" />
+          <Property Name="Nscore" Type="Int32" Nullable="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -100,6 +120,16 @@
                 <ScalarProperty Name="Review" ColumnName="Review" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Rid" ColumnName="Rid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reviewscores">
+            <EntityTypeMapping TypeName="moviereviewerModel.reviewscore">
+              <MappingFragment StoreEntitySet="reviewscore">
+                <ScalarProperty Name="Nscore" ColumnName="Nscore" />
+                <ScalarProperty Name="Pscore" ColumnName="Pscore" />
+                <ScalarProperty Name="Rid" ColumnName="Rid" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
