@@ -159,41 +159,47 @@ namespace MovieReviewer.Controllers
                 List<string> charsInReview =new List<string>(movy.Review.Split(' '));
                 foreach(string st in ct.positiveWords)
                 {
-                    foreach(string stemp in charsInReview)
-                    {
-                        if (stemp.ToLower().Equals(st))
+                    
+                        if (movy.Review.ToLower().Contains(st))
                         {
                             pScore += 1;
                         }
-                    }
+                    
                 }
 
                 foreach (string st in ct.negativeWords)
                 {
-                    foreach (string stemp in charsInReview)
-                    {
-                        if (stemp.ToLower().Equals(st))
+                    
+                        if (movy.Review.ToLower().Contains(st))
                         {
                             nScore += 1;
                         }
+                    
+                }
+              
+                foreach (string stemp in ct.pnList)
+                {
+                    if (movy.Review.ToLower().Contains(stemp))
+                    {
+                        nScore -= 1;
                     }
                 }
-                if (pScore > nScore)
+                foreach (string stemp in ct.nnList)
                 {
-                    nScore = 0;
+                    if (movy.Review.ToLower().Contains(stemp))
+                    {
+                        pScore -= 1;
+                    }
                 }
-                else if (pScore == nScore)
-                {
-                    pScore = 0;
-                    nScore = 0;
-                }
-                else
-                {
-                    pScore = 0;
-                }
-
                 db.Moviereviews.Add(movy);
+                reviewscore rs = new reviewscore();
                 
+                db.SaveChanges();
+                Moviereview mr = db.Moviereviews.Where(i => i.Review == movy.Review).FirstOrDefault();
+                rs.Rid = mr.Rid;
+                int totalScore = pScore-nScore;
+                rs.score = totalScore;
+                db.reviewscores.Add(rs);
                 db.SaveChanges();
                 jsonData = @"{'status':'success','responseMessage':movy}";
                 return JsonConvert.SerializeObject(jsonData);
