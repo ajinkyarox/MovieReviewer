@@ -135,6 +135,15 @@ namespace MovieReviewer.Controllers
 
 
 
+        [System.Web.Mvc.HttpGet]
+        public string GetReviewScore([FromUri] int id)
+        {
+           List<reviewscore> scores = db.reviewscores.ToList();
+
+            return null;
+        }
+
+
         [System.Web.Mvc.HttpPost]
         public string PostReview([FromBody] Moviereview movy)
         {
