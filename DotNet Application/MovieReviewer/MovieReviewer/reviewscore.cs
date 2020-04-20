@@ -17,5 +17,6 @@ namespace MovieReviewer
         public int Id { get; set; }
         public int Rid { get; set; }
         public Nullable<int> score { get; set; }
+        public Nullable<int> movieid { get; set; }
     }
 }

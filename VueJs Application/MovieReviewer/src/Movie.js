@@ -25,6 +25,9 @@ export default {
   getAll(Id) {
     return this.execute('get', '/GETALL?Id='+Id)
   },
+  getScore(Id){
+    return this.execute('get', '/GETSCORE?Id='+Id)
+  },
   create(data) {
     return this.execute('post', '/POSTREVIEW', data)
   },

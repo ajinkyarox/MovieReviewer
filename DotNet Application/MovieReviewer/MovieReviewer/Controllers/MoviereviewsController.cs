@@ -26,6 +26,19 @@ namespace MovieReviewer.Controllers
 
             return JsonConvert.SerializeObject(db.Moviereviews.Where(x=>x.Id==id));
         }
+        public int GetScore([FromUri] int id)
+        {
+
+            List<reviewscore> mv = db.reviewscores.Where(x => x.movieid == id).ToList();
+            List<int> scores =new List<int>();
+            for(int i = 0; i < mv.Count; i++)
+            {
+                scores.Insert(i,(int)mv[i].score);
+            }
+            Kmeans km = new Kmeans();
+            int score = km.kmeansscore(scores);
+            return score;
+        }
 
         [System.Web.Mvc.HttpDelete]
         public string DeleteReview([FromUri] int Rid)
@@ -48,7 +61,7 @@ namespace MovieReviewer.Controllers
 
                 }
                 Moviereview movy = db.Moviereviews.FirstOrDefault(i => i.Rid == Rid);
-
+                db.reviewscores.RemoveRange(db.reviewscores.Where(c => c.Rid == Rid));
                 db.Moviereviews.Remove(movy);
                 db.SaveChanges();
                 jsonData = @"{'status':'success','responseMessage':movy}";
@@ -162,6 +175,7 @@ namespace MovieReviewer.Controllers
 
 
                 }
+                int movieid = movy.Id;
                 Constants ct = new Constants();
                 int pScore = 0;
                 int nScore = 0;
@@ -206,6 +220,7 @@ namespace MovieReviewer.Controllers
                 db.SaveChanges();
                 Moviereview mr = db.Moviereviews.Where(i => i.Review == movy.Review).FirstOrDefault();
                 rs.Rid = mr.Rid;
+                rs.movieid = movieid;
                 int totalScore = pScore-nScore;
                 rs.score = totalScore;
                 db.reviewscores.Add(rs);

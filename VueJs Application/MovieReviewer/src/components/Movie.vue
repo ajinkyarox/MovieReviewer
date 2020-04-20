@@ -5,6 +5,8 @@
    {{Name}}
 
    <br><br><br>
+   {{score}}
+   <br><br><br>
    <div align="left">
     <button v-on:click="back">{{backstr}}</button>
   </div>
@@ -79,13 +81,17 @@ export default {
          isOpen: false,
       updateMovie: false,
        deleteMovie:false,
-     Did:''
+     Did:'',
+     score:0
      };
     
     },
     async created() {
     this.getAll()
+    this.score=await api.getScore(this.Id)
+alert(this.score)
   },
+
     methods: {
       async getAll() {
       this.loading = true
@@ -100,6 +106,7 @@ export default {
 back(){
 router.push({ path: '/moviereviewer'})
 },
+
 updateEvent(id){
       this.Did=id
 this.isOpen = true

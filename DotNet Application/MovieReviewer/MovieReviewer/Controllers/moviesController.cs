@@ -103,6 +103,7 @@ namespace MovieReviewer.Controllers
 
                 db.movies.Remove(movy);
                 db.Moviereviews.RemoveRange(db.Moviereviews.Where(c => c.Id == id));
+                db.reviewscores.RemoveRange(db.reviewscores.Where(c => c.movieid == id));
                 db.SaveChanges();
                 jsonData = @"{'status':'success','responseMessage':movy}";
                 return JsonConvert.SerializeObject(jsonData);
@@ -191,6 +192,7 @@ namespace MovieReviewer.Controllers
 
      return JsonConvert.SerializeObject(db.movies.ToList());
         }
+        
         // GET: movies
         public ActionResult Index()
         {
