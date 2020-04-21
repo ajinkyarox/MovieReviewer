@@ -26,7 +26,7 @@ namespace MovieReviewer.Controllers
 
             return JsonConvert.SerializeObject(db.Moviereviews.Where(x=>x.Id==id));
         }
-        public int GetScore([FromUri] int id)
+        public String GetScore([FromUri] int id)
         {
 
             List<reviewscore> mv = db.reviewscores.Where(x => x.movieid == id).ToList();
@@ -36,7 +36,7 @@ namespace MovieReviewer.Controllers
                 scores.Insert(i,(int)mv[i].score);
             }
             Kmeans km = new Kmeans();
-            int score = km.kmeansscore(scores);
+            String score = km.kmeansscore(scores);
             return score;
         }
 

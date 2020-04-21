@@ -89,7 +89,10 @@ export default {
     async created() {
     this.getAll()
     this.score=await api.getScore(this.Id)
-alert(this.score)
+    if(this.score!=="Not enough reviews to produce rating."){
+      this.score=this.score+'% of people have rated this film as good.'
+    }
+
   },
 
     methods: {
