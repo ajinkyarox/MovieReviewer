@@ -79,8 +79,8 @@ namespace MovieReviewer.Others
             for(int i = 0; i < scores.Count; i++)
             {
                 k0.Insert(i,(int)scores[i]);
-                k1.Insert(i, (int)0);
-                k2.Insert(i, (int)0);
+                k1.Insert(i, (int)-100);
+                k2.Insert(i, (int)-100);
 
 
             }
@@ -151,20 +151,20 @@ namespace MovieReviewer.Others
             sc1 = sc2 = sc3 = 0;
             for(int i = 0; i < scores.Count; i++)
             {
-                if (k0[i] != 0)
+                if (k0[i] != -100)
                 {
                     sc1 = sc1 + 1;
                 }
-                if (k1[i] != 0)
+                if (k1[i] != -100)
                 {
                     sc2 = sc2 + 1;
                 }
-                if (k2[i] != 0)
+                if (k2[i] !=-100)
                 {
                     sc3 = sc3 + 1;
                 }
             }
-            score = (float)sc2/(sc1+sc2+sc3);
+            score = (float)sc1/(sc1+sc2+sc3) + (float)sc2/(2*(sc1+sc2+sc3));
             score =score* 100;
 
 
