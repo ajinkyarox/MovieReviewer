@@ -164,7 +164,7 @@ namespace MovieReviewer.Others
                     sc3 = sc3 + 1;
                 }
             }
-            score = (float)sc1/(sc1+sc2+sc3) + (float)sc2/(2*(sc1+sc2+sc3));
+            score = ((float)sc1/(sc1+sc2+sc3)) + ((float)sc2/(2*(sc1+sc2+sc3)));
             score =score* 100;
 
 
